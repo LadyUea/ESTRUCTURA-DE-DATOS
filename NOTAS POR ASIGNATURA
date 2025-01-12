@@ -1,0 +1,51 @@
+using System;
+using System.Collections.Generic;
+
+namespace EjercicioNotas
+{
+    class Programa
+    {
+        static void Main(string[] args)
+        {
+            Curso curso = new Curso();
+            curso.AgregarAsignatura("Matemáticas");
+            curso.AgregarAsignatura("Física");
+            curso.AgregarAsignatura("Química");
+            curso.AgregarAsignatura("Historia");
+            curso.AgregarAsignatura("Lengua");
+
+            curso.PedirNotas();
+            curso.MostrarNotas();
+        }
+    }
+
+    class Curso
+    {
+        private List<string> asignaturas = new List<string>();
+        private Dictionary<string, double> notas = new Dictionary<string, double>();
+
+        public void AgregarAsignatura(string asignatura)
+        {
+            asignaturas.Add(asignatura);
+        }
+
+        public void PedirNotas()
+        {
+            foreach (var asignatura in asignaturas)
+            {
+                Console.Write($"Introduce la nota para {asignatura}: ");
+                double nota = double.Parse(Console.ReadLine());
+                notas[asignatura] = nota;
+            }
+        }
+
+        public void MostrarNotas()
+        {
+            Console.WriteLine("\nNotas obtenidas:");
+            foreach (var asignatura in notas)
+            {
+                Console.WriteLine($"En {asignatura.Key} has sacado {asignatura.Value}.");
+            }
+        }
+    }
+}
