@@ -1,0 +1,35 @@
+using System;
+using System.Collections.Generic;
+
+namespace EjercicioNumeros
+{
+    class Programa
+    {
+        static void Main(string[] args)
+        {
+            ListaNumeros lista = new ListaNumeros();
+            lista.GenerarNumeros();
+            lista.MostrarNumerosInversos();
+        }
+    }
+
+    class ListaNumeros
+    {
+        private List<int> numeros = new List<int>();
+
+        public void GenerarNumeros()
+        {
+            for (int i = 1; i <= 10; i++)
+            {
+                numeros.Add(i);
+            }
+        }
+
+        public void MostrarNumerosInversos()
+        {
+            numeros.Reverse();
+            Console.WriteLine("Números en orden inverso:");
+            Console.WriteLine(string.Join(", ", numeros));
+        }
+    }
+}
