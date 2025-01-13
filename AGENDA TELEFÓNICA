@@ -1,0 +1,128 @@
+using System;
+using System.Collections.Generic;
+
+namespace AgendaTelefonica
+{
+    class Contacto
+    {
+        public string Nombre { get; set; }
+        public string Telefono { get; set; }
+        public string Correo { get; set; }
+
+        public Contacto(string nombre, string telefono, string correo)
+        {
+            Nombre = nombre;
+            Telefono = telefono;
+            Correo = correo;
+        }
+
+        public override string ToString()
+        {
+            return $"Nombre: {Nombre}, Teléfono: {Telefono}, Correo: {Correo}";
+        }
+    }
+
+    class Agenda
+    {
+        private List<Contacto> contactos = new List<Contacto>();
+
+        public void AgregarContacto(Contacto contacto)
+        {
+            contactos.Add(contacto);
+            Console.WriteLine($"Contacto {contacto.Nombre} agregado con éxito.");
+        }
+
+        public void EliminarContacto(string criterio)
+        {
+            var contacto = contactos.Find(c => c.Nombre.Equals(criterio, StringComparison.OrdinalIgnoreCase) || c.Telefono == criterio);
+            if (contacto != null)
+            {
+                contactos.Remove(contacto);
+                Console.WriteLine($"Contacto {criterio} eliminado con éxito.");
+            }
+            else
+            {
+                Console.WriteLine($"No se encontró ningún contacto con el criterio: {criterio}.");
+            }
+        }
+
+        public void BuscarContacto(string nombre)
+        {
+            var contacto = contactos.Find(c => c.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase));
+            if (contacto != null)
+            {
+                Console.WriteLine(contacto);
+            }
+            else
+            {
+                Console.WriteLine($"No se encontró ningún contacto con el nombre: {nombre}.");
+            }
+        }
+
+        public void ListarContactos()
+        {
+            if (contactos.Count == 0)
+            {
+                Console.WriteLine("La agenda está vacía.");
+            }
+            else
+            {
+                Console.WriteLine("Contactos en la agenda:");
+                foreach (var contacto in contactos)
+                {
+                    Console.WriteLine(contacto);
+                }
+            }
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Agenda agenda = new Agenda();
+            while (true)
+            {
+                Console.WriteLine("\n1. Agregar contacto");
+                Console.WriteLine("2. Eliminar contacto");
+                Console.WriteLine("3. Buscar contacto");
+                Console.WriteLine("4. Listar contactos");
+                Console.WriteLine("5. Salir");
+                Console.Write("Seleccione una opción: ");
+                string opcion = Console.ReadLine();
+
+                switch (opcion)
+                {
+                    case "1":
+                        Console.Write("Nombre: ");
+                        string nombre = Console.ReadLine();
+                        Console.Write("Teléfono: ");
+                        string telefono = Console.ReadLine();
+                        Console.Write("Correo: ");
+                        string correo = Console.ReadLine();
+                        agenda.AgregarContacto(new Contacto(nombre, telefono, correo));
+                        break;
+                    case "2":
+                        Console.Write("Ingrese el nombre o teléfono del contacto a eliminar: ");
+                        string criterio = Console.ReadLine();
+                        agenda.EliminarContacto(criterio);
+                        break;
+                    case "3":
+                        Console.Write("Ingrese el nombre del contacto a buscar: ");
+                        string buscar = Console.ReadLine();
+                        agenda.BuscarContacto(buscar);
+                        break;
+                    case "4":
+                        agenda.ListarContactos();
+                        break;
+                    case "5":
+                        Console.WriteLine("¡Hasta luego!");
+                        return;
+                    default:
+                        Console.WriteLine("Opción no válida. Intente de nuevo.");
+                        break;
+                }
+            }
+        }
+    }
+}
